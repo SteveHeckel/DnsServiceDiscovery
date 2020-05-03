@@ -26,6 +26,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    msbuildArgs: '/t:pack'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -33,8 +34,15 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
+#- task: NuGetCommand@2
+#  inputs:
+#    command: 'pack'
+#    packagesToPack: '**/*.csproj'
+#    versioningScheme: 'off'
+
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
     artifact: 'DnsServiceDiscovery'
     publishLocation: 'pipeline'
+
