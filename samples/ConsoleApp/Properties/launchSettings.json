@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Heckel.Bonjour.DnsSD.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "register . _cac._tcp . 6789 meh=blah"
+    }
+  }
+}

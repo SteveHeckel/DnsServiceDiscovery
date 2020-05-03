@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Mittosoft.DnsServiceDiscovery</RootNamespace>
+    <AssemblyName>Mittosoft.DnsServiceDiscovery</AssemblyName>
+    <Authors>Steve Heckel</Authors>
+    <Description>A pure .Net managed API for interfacing to Apple/Bonjour's mDNSResponder service to enable DNS Service Discovery.</Description>
+    <Company>Fidelesoft</Company>
+    <PackageTags>Bonjour Zeroconf mDNS DNS-SD</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
+    <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
+    <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
