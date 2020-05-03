@@ -19,3 +19,5 @@ I have a fairly long TODO list associated with this project and will be updating
 I will be adding Github-related content including CONTRIBUTING guidelines.
 
 This is my first open-source contribution and I'm by no means a Git/Github guru, so please bear with me as I become more familiar with the community and tools.
+
+[![Build Status](https://dev.azure.com/steveheckel/steveheckel/_apis/build/status/SteveHeckel.DnsServiceDiscovery?branchName=master)](https://dev.azure.com/steveheckel/steveheckel/_build/latest?definitionId=1&branchName=master)
