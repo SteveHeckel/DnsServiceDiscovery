@@ -202,8 +202,7 @@ namespace Mittosoft.DnsServiceDiscovery.Cli
                     var option = arg[2..];
                     if (OptionsUsageInfo.ContainsKey(option))
                     {
-                        var oui = OptionsUsageInfo[option];
-                        var argsCount = oui.argCount;
+                        var (argsCount, _, _) = OptionsUsageInfo[option];
                         string[] oargs = null;
                         if (argsCount != 0)
                         {
