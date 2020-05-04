@@ -8,6 +8,8 @@ The library currently implements the following operations:
 - Resolve Services
 - Lookup Host Address Information
 
+You can download the [Nuget package at this link](https://www.nuget.org/packages/Mittosoft.DnsServiceDiscovery)
+
 System Requirements:
 This library depends on the mDNSResponder service included with the [Bonjour SDK for Windows](https://download.developer.apple.com/Developer_Tools/bonjour_sdk_for_windows_v3.0/bonjoursdksetup.exe).  The library was tested with version 3.0 of the SDK.
 
