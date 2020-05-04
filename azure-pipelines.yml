@@ -22,25 +22,28 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Build'
   inputs:
     command: 'build'
     projects: 'src/DnsServiceDiscovery/DnsServiceDiscovery.csproj'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Test'
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Pack'
   inputs:
     command: 'pack'
     packagesToPack: 'src/DnsServiceDiscovery/DnsServiceDiscovery.csproj'
     versioningScheme: 'off'
 
-- task: DotNetCoreCLI@2
+- task: NuGetCommand@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget MyNugetKey'
