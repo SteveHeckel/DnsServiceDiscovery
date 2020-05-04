@@ -212,6 +212,7 @@ namespace Mittosoft.ServiceBrowser
                 WriteLine($"Lookup operation for host [{args.HostName}] failed: {dse.Message}");
             }
 
+            node.Nodes.Add(new TreeNode("Full Name: " + args.FullName));
             node.Nodes.Add(new TreeNode("Port: " + args.Port));
             if (args.TxtRecords != null)
             {
