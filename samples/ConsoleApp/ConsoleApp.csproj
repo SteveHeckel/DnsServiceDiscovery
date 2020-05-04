@@ -6,7 +6,7 @@
     <AssemblyName>dnssdcli</AssemblyName>
     <PackageId>dnssdcli</PackageId>
     <Authors>Steve Heckel</Authors>
-    <Company>Fidelesoft</Company>
+    <Company>Mittosoft</Company>
     <Product>DNS Service Discovery CLI</Product>
     <Description>Console application to exercise the DnsServiceDiscovery Library.</Description>
     <RootNamespace>Mittosoft.DnsServiceDiscovery.CLI</RootNamespace>

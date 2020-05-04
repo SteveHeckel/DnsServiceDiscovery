@@ -67,6 +67,7 @@
             this.treeViewServices.Name = "treeViewServices";
             this.treeViewServices.Size = new System.Drawing.Size(1005, 915);
             this.treeViewServices.TabIndex = 0;
+            this.treeViewServices.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewServices_KeyDown);
             // 
             // textBoxMessages
             // 
@@ -91,7 +92,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ServiceBrowserForm";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "Fidelesoft DNS Service Browser";
+            this.Text = "Mittosoft DNS Service Browser";
             this.Load += new System.EventHandler(this.ServiceBrowserForm_Load);
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel2.ResumeLayout(false);

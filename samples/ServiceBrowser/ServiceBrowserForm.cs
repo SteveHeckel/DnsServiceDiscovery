@@ -307,6 +307,19 @@ namespace Mittosoft.ServiceBrowser
         }
 
         #endregion
+
+        private void treeViewServices_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void treeViewServices_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                Clipboard.SetText(treeViewServices.SelectedNode.Text);
+                e.SuppressKeyPress = true;
+            }
+        }
     }
 
     public class BrowserNodeComparer : IComparer<TreeNode>, IComparer
