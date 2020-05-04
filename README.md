@@ -13,6 +13,8 @@ You can download the [Nuget package at this link](https://www.nuget.org/packages
 System Requirements:
 This library depends on the mDNSResponder service included with the [Bonjour SDK for Windows](https://download.developer.apple.com/Developer_Tools/bonjour_sdk_for_windows_v3.0/bonjoursdksetup.exe).  The library was tested with version 3.0 of the SDK.
 
+At some point I would like to test the library with other mDNSResponder builds running on other platforms, and with the Avahi Bonjour compatibility library on Linux.
+
 I will be adding new features in the future as time permits.
 
 Currently only building as a .Net Standard 2.0 library.  I will add new build targets in the future if there is demand for it.
