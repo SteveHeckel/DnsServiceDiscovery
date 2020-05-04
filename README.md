@@ -1,6 +1,6 @@
 # Mittosoft.DnsServiceDiscovery
 
-A pure .Net managed API for interfacing to Apple/Bonjour's mDNSResponder service on Windows, to enable DNS Service Discovery.
+A pure .Net managed API for interfacing to Apple/Bonjour's mDNSResponder service on Windows, to enable DNS Service Discovery.  This library bypasses the several layers of indirection provided in the Bonjour SDK, including the COM Interop layers, and is a 100% TAP (Task-based Asynchronous Pattern) implementation.
 
 The library currently implements the following operations:
 - Browse Services
