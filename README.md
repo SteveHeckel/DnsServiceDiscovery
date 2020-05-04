@@ -8,6 +8,9 @@ The library currently implements the following operations:
 - Resolve Services
 - Lookup Host Address Information
 
+System Requirements:
+This library depends on the mDNSResponder service included with the [Bonjour SDK for Windows](https://download.developer.apple.com/Developer_Tools/bonjour_sdk_for_windows_v3.0/bonjoursdksetup.exe).  The library was tested with version 3.0 of the SDK.
+
 I will be adding new features in the future as time permits.
 
 Currently only building as a .Net Standard 2.0 library.  I will add new build targets in the future if there is demand for it.
