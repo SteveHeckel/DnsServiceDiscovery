@@ -235,7 +235,7 @@ namespace Mittosoft.DnsServiceDiscovery.Cli
                 Console.WriteLine($"{key?.PadRight(12)}{value.argsInfo}");
         }
 
-       
+        // from the Bonjour dns-sd CLI utility - print_usage() function
         //private static string[] MainUsageStrings = new[]
         //{
         //    "-E                              (Enumerate recommended registration domains)",
