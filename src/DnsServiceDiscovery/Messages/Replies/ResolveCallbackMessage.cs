@@ -30,8 +30,8 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
 
     internal class ResolveCallbackMessagePayload : CallbackMessagePayload
     {
-        public string HostName { get; private set; } = string.Empty;
         public string FullName { get; private set; } = string.Empty;
+        public string HostName { get; private set; } = string.Empty;
         public ushort Port { get; private set; }
         public byte[] TxtRecord { get; private set; }
 
@@ -54,8 +54,8 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
             var writer = new BinaryWriter(ms);
 
             writer.Write(base.GetBytes());
-            writer.Write(ServiceMessage.GetMessageStringBytes(HostName));
             writer.Write(ServiceMessage.GetMessageStringBytes(FullName));
+            writer.Write(ServiceMessage.GetMessageStringBytes(HostName));
             writer.Write(ServiceMessage.HostToNetworkOrder(Port));
             writer.Write(ServiceMessage.HostToNetworkOrder((ushort)(TxtRecord?.Length ?? 0)));
             if (TxtRecord != null)
@@ -67,8 +67,8 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
         public override void Parse(byte[] bytes, ref int index)
         {
             base.Parse(bytes, ref index);
-            HostName = ServiceMessage.GetString(bytes, ref index);
             FullName = ServiceMessage.GetString(bytes, ref index);
+            HostName = ServiceMessage.GetString(bytes, ref index);
             Port = ServiceMessage.GetUInt16(bytes, ref index);
             var txtRecordLength = ServiceMessage.GetUInt16(bytes, ref index);
             if (txtRecordLength != 0)

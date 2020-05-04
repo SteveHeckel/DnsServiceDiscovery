@@ -6,8 +6,13 @@
     <AssemblyName>Mittosoft.DnsServiceDiscovery</AssemblyName>
     <Authors>Steve Heckel</Authors>
     <Description>A pure .Net managed API for interfacing to Apple/Bonjour's mDNSResponder service to enable DNS Service Discovery.</Description>
-    <Company>Fidelesoft</Company>
+    <Company>Mittosoft</Company>
     <PackageTags>Bonjour Zeroconf mDNS DNS-SD</PackageTags>
+    <Version>1.0.1</Version>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Copyright>Copyright (c) 2020 Steve Heckel</Copyright>
+    <RepositoryUrl>https://github.com/SteveHeckel/DnsServiceDiscovery</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,6 +23,13 @@
     <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
     <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
     <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
