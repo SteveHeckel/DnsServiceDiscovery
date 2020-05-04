@@ -24,7 +24,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '/src/DnsServiceDiscovery/DnsServiceDiscovery.csproj'
+    projects: 'src/DnsServiceDiscovery/DnsServiceDiscovery.csproj'
 
 - task: DotNetCoreCLI@2
   inputs:
