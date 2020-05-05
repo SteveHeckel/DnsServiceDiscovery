@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Mittosoft.ServiceBrowser
+namespace Mittosoft.DnsServiceBrowser
 {
     internal static class ControlExtensions
     {

@@ -1,6 +1,6 @@
-﻿namespace Mittosoft.ServiceBrowser
+﻿namespace Mittosoft.DnsServiceBrowser
 {
-    partial class ServiceBrowserForm
+    partial class DnsServiceBrowserForm
     {
         /// <summary>
         /// Required designer variable.
@@ -90,7 +90,7 @@
             this.ClientSize = new System.Drawing.Size(1029, 1348);
             this.Controls.Add(this.splitContainerMain);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ServiceBrowserForm";
+            this.Name = "DnsServiceBrowserForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Mittosoft DNS Service Browser";
             this.Load += new System.EventHandler(this.ServiceBrowserForm_Load);

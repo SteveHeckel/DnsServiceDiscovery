@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mittosoft.ServiceBrowser.Properties {
+namespace Mittosoft.DnsServiceBrowser.Properties {
     using System;
     
     

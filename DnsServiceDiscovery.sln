@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsServiceDiscovery", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "samples\ConsoleApp\ConsoleApp.csproj", "{69B90606-447A-4F8A-BBE2-DF083778EB3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBrowser", "samples\ServiceBrowser\ServiceBrowser.csproj", "{F1518760-17E3-4FE3-8B24-D8796FA82318}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnsServiceBrowser", "samples\ServiceBrowser\DnsServiceBrowser.csproj", "{F1518760-17E3-4FE3-8B24-D8796FA82318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnsServiceDiscovery.Tests", "tests\DnsServiceDiscovery.Tests\DnsServiceDiscovery.Tests.csproj", "{1358B2E3-54D7-4CCC-9129-56E37E036926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsServiceDiscovery.Tests", "tests\DnsServiceDiscovery.Tests\DnsServiceDiscovery.Tests.csproj", "{1358B2E3-54D7-4CCC-9129-56E37E036926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

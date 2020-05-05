@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Mittosoft.ServiceBrowser
+namespace Mittosoft.DnsServiceBrowser
 {
     static class Program
     {
@@ -13,7 +13,7 @@ namespace Mittosoft.ServiceBrowser
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ServiceBrowserForm());
+            Application.Run(new DnsServiceBrowserForm());
         }
     }
 }

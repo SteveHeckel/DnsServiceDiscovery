@@ -121,9 +121,11 @@ namespace Mittosoft.DnsServiceDiscovery
 
         public async Task CancelAllOperationsAsync( )
         {
-            await CheckConnectionAsync();
-
-            await _connection.CancelAsync();
+            if (_connection != null)
+            {
+                await _connection.CancelAsync();
+                _connection = null;
+            }
         }
     }
 }

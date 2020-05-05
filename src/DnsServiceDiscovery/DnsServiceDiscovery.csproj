@@ -8,7 +8,7 @@
     <Description>A pure .Net managed API for interfacing to Apple/Bonjour's mDNSResponder service to enable DNS Service Discovery.</Description>
     <Company>Mittosoft</Company>
     <PackageTags>Bonjour Zeroconf mDNS DNS-SD</PackageTags>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <Copyright>Copyright (c) 2020 Steve Heckel</Copyright>
     <RepositoryUrl>https://github.com/SteveHeckel/DnsServiceDiscovery</RepositoryUrl>

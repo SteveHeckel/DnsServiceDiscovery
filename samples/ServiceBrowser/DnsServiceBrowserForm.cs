@@ -10,13 +10,13 @@ using Mittosoft.DnsServiceDiscovery;
 using Mittosoft.DnsServiceDiscovery.Operations;
 using ResolveEventArgs = Mittosoft.DnsServiceDiscovery.ResolveEventArgs;
 
-namespace Mittosoft.ServiceBrowser
+namespace Mittosoft.DnsServiceBrowser
 {
-    public partial class ServiceBrowserForm : Form
+    public partial class DnsServiceBrowserForm : Form
     {
         private readonly DnsServiceDiscovery.DnsServiceDiscovery _service;
 
-        public ServiceBrowserForm()
+        public DnsServiceBrowserForm()
         {
             InitializeComponent();
 
