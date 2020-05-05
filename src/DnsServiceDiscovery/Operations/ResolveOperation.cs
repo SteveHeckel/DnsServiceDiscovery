@@ -20,7 +20,7 @@ namespace Mittosoft.DnsServiceDiscovery.Operations
         {
             if (message is ResolveCallbackMessage rcm)
             {
-                IEnumerable<TxtRecord> records = null;
+                IEnumerable<DnssdTxtRecord> records = null;
                 if (rcm.Payload.TxtRecord != null)
                 {
                     var trb = new TxtRecordBuilder();

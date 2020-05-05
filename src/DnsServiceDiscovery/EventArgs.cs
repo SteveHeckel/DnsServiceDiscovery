@@ -94,9 +94,9 @@ namespace Mittosoft.DnsServiceDiscovery
         public string FullName { get; }
         public string HostName { get; }
         public ushort Port { get; }
-        public IReadOnlyList<TxtRecord> TxtRecords { get; }
+        public IReadOnlyList<DnssdTxtRecord> TxtRecords { get; }
 
-        public ResolveEventArgs(string fullName, string hostName, ushort port, uint interfaceIndex, IEnumerable<TxtRecord> txtRecords, bool moreComing)
+        public ResolveEventArgs(string fullName, string hostName, ushort port, uint interfaceIndex, IEnumerable<DnssdTxtRecord> txtRecords, bool moreComing)
             : base(moreComing)
         {
             FullName = fullName;

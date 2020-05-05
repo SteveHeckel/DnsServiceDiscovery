@@ -7,13 +7,13 @@ namespace Mittosoft.DnsServiceDiscovery.Records
 {
     public class TxtRecordBuilder
     {
-        public List<TxtRecord> TxtRecords { get; } = new List<TxtRecord>();
+        public List<DnssdTxtRecord> TxtRecords { get; } = new List<DnssdTxtRecord>();
 
         public TxtRecordBuilder()
         {
         }
 
-        public TxtRecordBuilder(IEnumerable<TxtRecord> recordList)
+        public TxtRecordBuilder(IEnumerable<DnssdTxtRecord> recordList)
         {
             TxtRecords.AddRange(recordList);
         }
@@ -36,7 +36,7 @@ namespace Mittosoft.DnsServiceDiscovery.Records
             Append(ParseString(txtRecordString));
         }
 
-        public void Append(TxtRecord record)
+        public void Append(DnssdTxtRecord record)
         {
             TxtRecords.Add(record);
         }
@@ -56,11 +56,11 @@ namespace Mittosoft.DnsServiceDiscovery.Records
         // Parse binary array in to constituent TxtRecord instances
         public int Parse(byte[] bytes, int index)
         {
-            TxtRecord txtRecord = null;
+            DnssdTxtRecord txtRecord;
 
             do
             {
-                txtRecord = TxtRecord.Parse(bytes, ref index);
+                txtRecord = DnssdTxtRecord.Parse(bytes, ref index);
                 if (txtRecord != null)
                     Append(txtRecord);
             } while (txtRecord != null);
@@ -69,12 +69,12 @@ namespace Mittosoft.DnsServiceDiscovery.Records
         }
        
         // This method parses a bonjour dns-sd style TXT record command line string and creates a TxtRecord instance
-        public static TxtRecord ParseString(string txtRecordString)
+        public static DnssdTxtRecord ParseString(string txtRecordString)
         {
             var txtRecordData = new List<byte>();
 
             int incr;
-            for (var i = 0; i < txtRecordString.Length && txtRecordData.Count < TxtRecord.MaxTxtRecordDataLength; i += incr)
+            for (var i = 0; i < txtRecordString.Length && txtRecordData.Count < DnssdTxtRecord.MaxTxtRecordDataLength; i += incr)
             {
                 // Not an escape char or it's the last char of the string
                 if (txtRecordString[i] != '\\' || i + 1 == txtRecordString.Length)
@@ -98,14 +98,14 @@ namespace Mittosoft.DnsServiceDiscovery.Records
                 }
             }
 
-            return new TxtRecord(txtRecordData.ToArray());
+            return new DnssdTxtRecord(txtRecordData.ToArray());
         }
 
-        public static string ToRecordString(TxtRecord txtRecord)
+        public static string ToRecordString(DnssdTxtRecord txtRecord)
         {
             var builder = new StringBuilder();
 
-            foreach (var value in txtRecord.Record)
+            foreach (var value in txtRecord.RecordBytes)
             {
                 if (IsPrintable(value))
                     builder.Append(Convert.ToChar(value));

@@ -256,7 +256,8 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
                     }
                     catch (Exception)
                     {
-                        // Todo: log and/or raise an event
+                        CloseConnection(ConnectionClosedReason.Incompatible);
+                        return;
                     }
                 }
                 catch (OperationCanceledException)

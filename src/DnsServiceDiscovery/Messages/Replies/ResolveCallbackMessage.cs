@@ -48,6 +48,19 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
             TxtRecord = txtRecord;
         }
 
+        // From RFC 6763
+        // An empty TXT record containing zero strings is not allowed[RFC1035].
+        // DNS-SD implementations MUST NOT emit empty TXT records.DNS-SD
+        //     clients MUST treat the following as equivalent:
+        //
+        //  o A TXT record containing a single zero byte.
+        //      (i.e., a single empty string.)
+        //  o An empty(zero-length) TXT record.
+        //      (This is not strictly legal, but should one be received, it should
+        //      be interpreted as the same as a single empty string.)
+        //  o No TXT record.
+        //      (i.e., an NXDOMAIN or no-error-no-answer response.)
+        //
         public override byte[] GetBytes()
         {
             var ms = new MemoryStream();
@@ -71,8 +84,11 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
             HostName = ServiceMessage.GetString(bytes, ref index);
             Port = ServiceMessage.GetUInt16(bytes, ref index);
             var txtRecordLength = ServiceMessage.GetUInt16(bytes, ref index);
-            if (txtRecordLength != 0)
+            // Handle zero length record (this isn't strictly legal), or length of 1 which would be a zero length DNS-SD TXT Record
+            if (txtRecordLength > 1)
                 TxtRecord = ServiceMessage.GetSubArray(bytes, ref index, txtRecordLength);
+            else
+                index += txtRecordLength;
         }
 
     }

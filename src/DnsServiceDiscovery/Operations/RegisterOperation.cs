@@ -24,7 +24,6 @@ namespace Mittosoft.DnsServiceDiscovery.Operations
                     rcm.Payload.Flags.HasFlag(ServiceFlags.Add) ? RegistrationEventType.Added : RegistrationEventType.Removed :
                     RegistrationEventType.Error;
                 RegistrationEvent?.Invoke(Token, new RegistrationEventArgs(type, descriptor, error, moreComing));
-
             }
         }
     }
