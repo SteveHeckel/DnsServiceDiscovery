@@ -143,8 +143,7 @@ namespace Mittosoft.DnsServiceBrowser
             AddNetworkInterfaceNode(serviceInstanceNode, descriptor.InterfaceIndex);
             try
             {
-                serviceInstanceNode.Tag = await _service.ResolveAsync(descriptor.InstanceName, descriptor.ServiceType, descriptor.Domain,
-                    descriptor.InterfaceIndex, serviceInstanceNode);
+                serviceInstanceNode.Tag = await _service.ResolveAsync(descriptor, serviceInstanceNode);
             }
             catch (DnsServiceException e)
             {

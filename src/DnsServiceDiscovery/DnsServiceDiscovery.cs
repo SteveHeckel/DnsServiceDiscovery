@@ -16,6 +16,7 @@ namespace Mittosoft.DnsServiceDiscovery
         Task<bool> ProbeServiceAsync(bool leaveConnected = true);
         Task<IOperationToken> BrowseAsync(string serviceType, string domain = "", uint interfaceIndex = 0, object context = null);
         Task<IOperationToken> RegisterAsync(string instanceName, string serviceType, string domain, string host, ushort port, byte[] txtRecord = null, uint interfaceIndex = 0, object context = null);
+        Task<IOperationToken> ResolveAsync(ServiceDescriptor descriptor, object context = null);
         Task<IOperationToken> ResolveAsync(string instanceName, string serviceType, string domain, uint interfaceIndex = 0, object context = null);
         Task<IOperationToken> LookupAsync(string hostName, ProtocolFlags flags, bool withTimeout = false, uint interfaceIndex = 0, object context = null);
         Task CancelAllOperationsAsync( );
@@ -92,6 +93,11 @@ namespace Mittosoft.DnsServiceDiscovery
             await _connection.AddAndExecuteSubordinate(op);
 
             return op.Token;
+        }
+
+        public Task<IOperationToken> ResolveAsync(ServiceDescriptor descriptor, object context = null)
+        {
+            return ResolveAsync(descriptor.InstanceName, descriptor.ServiceType, descriptor.Domain, descriptor.InterfaceIndex, context);
         }
 
         public async Task<IOperationToken> ResolveAsync(string instanceName, string serviceType, string domain, uint interfaceIndex = 0, object context = null)
