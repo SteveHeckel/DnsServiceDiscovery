@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Mittosoft.DnsServiceDiscovery;
@@ -9,8 +7,6 @@ using Mittosoft.DnsServiceDiscovery.Communication;
 using Mittosoft.DnsServiceDiscovery.Messages;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Messages.Requests;
-using Nerdbank.Streams;
-using Nito.AsyncEx;
 
 namespace DnsServiceDiscovery.Tests.Communication
 {
@@ -68,8 +64,8 @@ namespace DnsServiceDiscovery.Tests.Communication
         }
 
         public bool IsConnected => _stream.CanRead && _stream.CanWrite;
-        
-        private readonly AsyncLock _writeMutex = new AsyncLock();
+
+        private readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
         public Task SendToRemote(ServiceError error)
         {
@@ -92,10 +88,10 @@ namespace DnsServiceDiscovery.Tests.Communication
                 throw new TestServiceTransportException("Except while writing to error stream", e);
             }
         }
-        
+
         public async Task PostMessageAsync(CallbackMessage message)
         {
-            using (await _writeMutex.LockAsync())
+            await _locker.LockAsync(async () =>
             {
                 if (!IsConnected)
                     throw new TestServiceTransportException("Stream is not connected");
@@ -115,9 +111,9 @@ namespace DnsServiceDiscovery.Tests.Communication
                 {
                     throw new TestServiceTransportException("Except while writing to remote stream", e);
                 }
-            }
+            });
         }
-        
+
         private void CloseConnection(ConnectionClosedReason reason)
         {
             _stream.Dispose();

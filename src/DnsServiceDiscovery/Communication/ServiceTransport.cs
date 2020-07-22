@@ -1,14 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Ardalis.GuardClauses;
 using Mittosoft.DnsServiceDiscovery.Messages;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Messages.Requests;
-using Nito.AsyncEx;
 
 namespace Mittosoft.DnsServiceDiscovery.Communication
 {
@@ -35,7 +32,7 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
 
     internal class ServiceTransport : IServiceTransport
     {
-        private readonly AsyncLock _writeMutex = new AsyncLock();
+        private readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
         private readonly Stream _stream;
 
@@ -57,17 +54,14 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
 
         public async Task StartAsync(RequestMessage startMessage, ProcessReplyCallback processReplyCallback, ConnectionClosedCallback connectionClosedCallback)
         {
-            Guard.Against.Null(processReplyCallback, nameof(processReplyCallback));
-            Guard.Against.Null(connectionClosedCallback, nameof(connectionClosedCallback));
-
-            _processReplyCallback = processReplyCallback;
-            _connectionClosedCallback = connectionClosedCallback;
+            _processReplyCallback = processReplyCallback ?? throw new ArgumentNullException(nameof(processReplyCallback));
+            _connectionClosedCallback = connectionClosedCallback ?? throw new ArgumentNullException(nameof(connectionClosedCallback));
 
             try
             {
                 await SendMessageAsync(startMessage, false);
                 _receiveLoopTask = ReceiveLoopAsync(_receiveLoopCancellationTokenSource.Token);
-                var _ = _receiveLoopTask.ContinueWith(t => ReceiveLoopFaulted(t.Exception), default, 
+                var _ = _receiveLoopTask.ContinueWith(t => ReceiveLoopFaulted(t.Exception), default,
                         TaskContinuationOptions.OnlyOnFaulted,
                         SynchronizationContext.Current != null ? TaskScheduler.FromCurrentSynchronizationContext() : TaskScheduler.Current);
             }
@@ -81,7 +75,7 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
         internal void ReceiveLoopFaulted(AggregateException ae)
         {
             // Todo: log these
-            ae.Handle(exception => true );
+            ae.Handle(exception => true);
             CloseConnection(ConnectionClosedReason.Faulted);
         }
 
@@ -111,10 +105,9 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
 
         public async Task PostMessageAsync(ServiceMessage message)
         {
-            using (await _writeMutex.LockAsync())
+            await _locker.LockAsync(async () =>
             {
-                if (!IsConnected)
-                    throw new DnsServiceException(ServiceError.BadState);
+                if (!IsConnected) throw new DnsServiceException(ServiceError.BadState);
 
                 try
                 {
@@ -131,12 +124,12 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
                 {
                     throw new DnsServiceException(ServiceError.ServiceNotRunning);
                 }
-            }
+            });
         }
 
         public async Task SendMessageAsync(RequestMessage message, bool separateErrorConnection)
         {
-            using (await _writeMutex.LockAsync())
+            await _locker.LockAsync(async () =>
             {
                 if (!IsConnected)
                     throw new DnsServiceException(ServiceError.BadState);
@@ -162,7 +155,7 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
                     else // This is only used if the operation is a primary connection
                         await GetOperationErrorAsync(_stream);
                 }
-                // If the read operation does not complete within the time specified by ReadTimeout, the read operation throws an IOException 
+                // If the read operation does not complete within the time specified by ReadTimeout, the read operation throws an IOException
                 catch (IOException)
                 {
                     throw new DnsServiceException(ServiceError.ServiceNotRunning);
@@ -171,7 +164,7 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
                 {
                     throw new DnsServiceException(ServiceError.ServiceNotRunning);
                 }
-            }
+            });
         }
 
         // This will be called prior to the receive loop being executed on a primary connection

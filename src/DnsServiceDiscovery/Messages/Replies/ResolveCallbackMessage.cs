@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Ardalis.GuardClauses;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
 {

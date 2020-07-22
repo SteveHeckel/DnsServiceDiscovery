@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Ardalis.GuardClauses;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 {
@@ -35,7 +34,10 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public BrowseMessagePayload(string serviceType, string domain, ServiceFlags flags, uint interfaceIndex)
         {
-            Guard.Against.NullOrEmpty(serviceType, nameof(serviceType));
+            if (string.IsNullOrEmpty(serviceType))
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
 
             Flags = flags;
             InterfaceIndex = interfaceIndex;
@@ -60,8 +62,15 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public override void Parse(byte[] bytes, ref int index)
         {
-            Guard.Against.Null(bytes, nameof(bytes));
-            Guard.Against.OutOfRange(index, nameof(index), 0, bytes.Length);
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            if (index < 0 || index > bytes.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes));
+            }
 
             base.Parse(bytes, ref index);
             Flags = (ServiceFlags)ServiceMessage.GetUInt32(bytes, ref index);

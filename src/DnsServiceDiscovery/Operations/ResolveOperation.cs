@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mittosoft.DnsServiceDiscovery.Messages;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Messages.Requests;
 using Mittosoft.DnsServiceDiscovery.Records;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Ardalis.GuardClauses;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 {
@@ -37,10 +36,21 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public ResolveMessagePayload(string instanceName, string serviceType, string domain, ServiceFlags flags, uint interfaceIndex)
         {
-            Guard.Against.NullOrEmpty(instanceName, nameof(instanceName));
-            Guard.Against.NullOrEmpty(serviceType, nameof(serviceType));
-            Guard.Against.NullOrEmpty(domain, nameof(domain));
-            
+            if (string.IsNullOrEmpty(instanceName))
+            {
+                throw new ArgumentNullException(nameof(instanceName));
+            }
+
+            if (string.IsNullOrEmpty(serviceType))
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
+
+            if (string.IsNullOrEmpty(domain))
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
+
             InstanceName = instanceName;
             ServiceType = serviceType;
             Domain = domain;
@@ -65,8 +75,15 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public override void Parse(byte[] bytes, ref int index)
         {
-            Guard.Against.Null(bytes, nameof(bytes));
-            Guard.Against.OutOfRange(index, nameof(index), 0, bytes.Length);
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            if (index < 0 || index > bytes.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes));
+            }
 
             base.Parse(bytes, ref index);
             Flags = (ServiceFlags)ServiceMessage.GetUInt32(bytes, ref index);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-
-namespace Mittosoft.DnsServiceDiscovery
+﻿namespace Mittosoft.DnsServiceDiscovery
 {
     public static class InterfaceIndex
     {

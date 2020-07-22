@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq.Expressions;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
 {
@@ -13,7 +12,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
     internal class CallbackMessagePayload : ICallbackMessagePayload
     {
         public bool IsSubordinateMessage { get; set; }
-        
+
         public ServiceFlags Flags { get; private set; }
         public uint InterfaceIndex { get; private set; }
         public ServiceError Error { get; private set; }

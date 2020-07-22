@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Ardalis.GuardClauses;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
 {
@@ -12,7 +11,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Replies
 
         public LookupCallbackMessage(CallbackMessageBaseValues baseValues, string hostName, ResourceRecordType rrType, ushort rrClass, byte[] rrData, uint ttl)
             : this(new ServiceMessageHeader(OperationCode.AddressInfoReply),
-                new LookupCallbackMessagePayload( baseValues, hostName, rrType, rrClass, rrData, ttl))
+                new LookupCallbackMessagePayload(baseValues, hostName, rrType, rrClass, rrData, ttl))
         {
         }
 

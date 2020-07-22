@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages
 {
@@ -43,7 +41,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages
     public class ServiceMessagePayload<T> : IServiceMessagePayload where T : IByteStreamSerializable, new()
     {
         public bool IsSubordinateMessage { get; set; }
-        
+
         public ServiceMessagePayload()
         {
             Value = new T();

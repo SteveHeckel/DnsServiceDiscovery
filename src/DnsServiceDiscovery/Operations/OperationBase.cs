@@ -1,16 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
-using Ardalis.GuardClauses;
 using Mittosoft.DnsServiceDiscovery.Communication;
-using Mittosoft.DnsServiceDiscovery.Helpers;
 using Mittosoft.DnsServiceDiscovery.Messages;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Messages.Requests;
-using Nito.AsyncEx;
 
 namespace Mittosoft.DnsServiceDiscovery.Operations
 {
@@ -74,17 +67,15 @@ namespace Mittosoft.DnsServiceDiscovery.Operations
 
         protected OperationBase(RequestMessage message, object context = null)
         {
-            Guard.Against.Null(message, nameof(message));
-
-            Message = message;
+            Message = message ?? throw new ArgumentNullException(nameof(message));
             Token = new OperationToken(this, context);
         }
 
-        private readonly AsyncLock _executeCancelMutex = new AsyncLock();
+        private readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
         internal async Task ExecuteAsync()
         {
-            using (await _executeCancelMutex.LockAsync())
+            await _locker.LockAsync(async () =>
             {
                 if (State != OperationState.New)
                     throw new InvalidOperationException($"Operation state must be {nameof(OperationState.New)}");
@@ -108,13 +99,13 @@ namespace Mittosoft.DnsServiceDiscovery.Operations
                 }
 
                 State = OperationState.Executing;
-            }
+            });
         }
 
         // This is the equivalent of DNSServiceRefDeallocate() in the Bojour dnssd API
         internal async Task CancelAsync()
         {
-            using (await _executeCancelMutex.LockAsync())
+            await _locker.LockAsync(async () =>
             {
                 if (State != OperationState.Executing)
                     return;
@@ -133,7 +124,7 @@ namespace Mittosoft.DnsServiceDiscovery.Operations
                 }
 
                 OnCanceled();
-            }
+            });
         }
 
         protected virtual void OnPrimaryCanceled() { }

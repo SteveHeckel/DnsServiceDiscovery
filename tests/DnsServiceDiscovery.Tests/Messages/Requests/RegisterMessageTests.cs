@@ -23,7 +23,7 @@ namespace DnsServiceDiscovery.Tests.Messages.Requests
             var trb = new TxtRecordBuilder(TxtRecordString);
             _txtRecordBytes = trb.GetBytes();
         }
-    
+
         [Fact]
         public void RegisterMessageSerializationTest()
         {

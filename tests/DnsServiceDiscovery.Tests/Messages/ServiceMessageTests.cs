@@ -20,7 +20,7 @@ namespace DnsServiceDiscovery.Tests.Messages
         private const ushort RegIndex = 0xBEAD;
         private const string RandomString = "Some Random Data";
 
-        private readonly ServiceMessageHeader _testHeader = new ServiceMessageHeader(ServiceMessageHeader.CurrentVersion, DataLength, 
+        private readonly ServiceMessageHeader _testHeader = new ServiceMessageHeader(ServiceMessageHeader.CurrentVersion, DataLength,
             Flags, OpCode, SubordinateID, RegIndex);
 
         [Fact]

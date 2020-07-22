@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Text;
+﻿using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace Mittosoft.DnsServiceDiscovery.Communication
@@ -20,7 +17,7 @@ namespace Mittosoft.DnsServiceDiscovery.Communication
         private const int ServerPort = 5354;
         public static int ConnectTries = 4;
         public int ClientTimeout => 60000; // 1 minute
-        
+
         public async Task<IServiceTransport> GetServiceTransport()
         {
             var client = await ConnectToServerAsync();

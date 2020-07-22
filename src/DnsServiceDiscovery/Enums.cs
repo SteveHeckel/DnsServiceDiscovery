@@ -159,7 +159,7 @@ namespace Mittosoft.DnsServiceDiscovery
         NoAuth = -65555,
         NoSuchKey = -65556,
         NatTraversal = -65557,
-        DoubleNat = -65558, 
+        DoubleNat = -65558,
         BadTime = -65559,                   /* Codes up to here existed in Tiger */
         BadSig = -65560,
         BadKey = -65561,
@@ -190,11 +190,11 @@ namespace Mittosoft.DnsServiceDiscovery
      * The reliable way to test whether a particular bit is set is not with an equality test,
      * but with a bitwise mask:
      *     if (flags & kDNSServiceFlagsAdd) ...
-     * With the exception of kDNSServiceFlagsValidate, each flag can be valid(be set) 
+     * With the exception of kDNSServiceFlagsValidate, each flag can be valid(be set)
      * EITHER only as an input to one of the DNSService*() APIs OR only as an output
      * (provide status) through any of the callbacks used. For example, kDNSServiceFlagsAdd
      * can be set only as an output in the callback, whereas the kDNSServiceFlagsIncludeP2P
-     * can be set only as an input to the DNSService*() APIs. See comments on kDNSServiceFlagsValidate  
+     * can be set only as an input to the DNSService*() APIs. See comments on kDNSServiceFlagsValidate
      * defined in enum below.
      */
     [Flags]
@@ -274,7 +274,7 @@ namespace Mittosoft.DnsServiceDiscovery
         Force = 0x800,    // This flag is deprecated.
 
         KnownUnique = 0x800,
-        /* 
+        /*
          * Client guarantees that record names are unique, so we can skip sending out initial
          * probe messages.  Standard name conflict resolution is still done if a conflict is discovered.
          * Currently only valid for a DNSServiceRegister call.
@@ -376,8 +376,8 @@ namespace Mittosoft.DnsServiceDiscovery
          * 5. Thread Safety
          * The dns_sd.h API does not presuppose any particular threading model, and consequently
          * does no locking internally (which would require linking with a specific threading library).
-         * If the client concurrently, from multiple threads (or contexts), calls API routines using 
-         * the same DNSServiceRef, it is the client's responsibility to provide mutual exclusion for 
+         * If the client concurrently, from multiple threads (or contexts), calls API routines using
+         * the same DNSServiceRef, it is the client's responsibility to provide mutual exclusion for
          * that DNSServiceRef.
 
          * For example, use of DNSServiceRefDeallocate requires caution. A common mistake is as follows:
@@ -426,7 +426,7 @@ namespace Mittosoft.DnsServiceDiscovery
 
         BackgroundTrafficClass = 0x80000,
         /*
-        * This flag is meaningful for Unicast DNS queries. When set, it uses the background traffic 
+        * This flag is meaningful for Unicast DNS queries. When set, it uses the background traffic
         * class for packets that service the request.
         */
 
@@ -437,32 +437,32 @@ namespace Mittosoft.DnsServiceDiscovery
 
         Validate = 0x200000,
         /*
-         * This flag is meaningful in DNSServiceGetAddrInfo and DNSServiceQueryRecord. This is the ONLY flag to be valid 
+         * This flag is meaningful in DNSServiceGetAddrInfo and DNSServiceQueryRecord. This is the ONLY flag to be valid
          * as an input to the APIs and also an output through the callbacks in the APIs.
          *
-         * When this flag is passed to DNSServiceQueryRecord and DNSServiceGetAddrInfo to resolve unicast names, 
-         * the response  will be validated using DNSSEC. The validation results are delivered using the flags field in 
+         * When this flag is passed to DNSServiceQueryRecord and DNSServiceGetAddrInfo to resolve unicast names,
+         * the response  will be validated using DNSSEC. The validation results are delivered using the flags field in
          * the callback and Validate is marked in the flags to indicate that DNSSEC status is also available.
-         * When the callback is called to deliver the query results, the validation results may or may not be available. 
+         * When the callback is called to deliver the query results, the validation results may or may not be available.
          * If it is not delivered along with the results, the validation status is delivered when the validation completes.
-         * 
+         *
          * When the validation results are delivered in the callback, it is indicated by marking the flags with
          * Validate and Add along with the DNSSEC status flags (described below) and a NULL
          * sockaddr will be returned for DNSServiceGetAddrInfo and zero length rdata will be returned for DNSServiceQueryRecord.
          * DNSSEC validation results are for the whole RRSet and not just individual records delivered in the callback. When
-         * Add is not set in the flags, applications should implicitly assume that the DNSSEC status of the 
+         * Add is not set in the flags, applications should implicitly assume that the DNSSEC status of the
          * RRSet that has been delivered up until that point is not valid anymore, till another callback is called with
          * Add and Validate.
          *
          * The following four flags indicate the status of the DNSSEC validation and marked in the flags field of the callback.
-         * When any of the four flags is set, Validate will also be set. To check the validation status, the 
+         * When any of the four flags is set, Validate will also be set. To check the validation status, the
          * other applicable output flags should be masked. See kDNSServiceOutputFlags below.
          */
 
         Secure = 0x200010,
         /*
          * The response has been validated by verifying all the signatures in the response and was able to
-         * build a successful authentication chain starting from a known trust anchor.   
+         * build a successful authentication chain starting from a known trust anchor.
          */
 
         Insecure = 0x200020,
@@ -528,11 +528,11 @@ namespace Mittosoft.DnsServiceDiscovery
          * should not rely on this behavior being supported in any given software release.
          *
          * When ThresholdReached is set in the client callback add or remove event,
-         * it indicates that the browse answer threshold has been reached and no 
+         * it indicates that the browse answer threshold has been reached and no
          * browse requests will be generated on the network until the number of answers falls
          * below the threshold value.  Add and remove events can still occur based
          * on incoming Bonjour traffic observed by the system.
-         * The set of services return to the client is not guaranteed to represent the 
+         * The set of services return to the client is not guaranteed to represent the
          * entire set of services present on the network once the threshold has been reached.
          *
          * Note, while ThresholdReached and ThresholdOne

@@ -42,7 +42,7 @@ namespace DnsServiceDiscovery.Tests.Communication
 
         public Task SendToRemote(ServiceError error)
         {
-            return SendToRemote(BitConverter.GetBytes(ServiceMessage.HostToNetworkOrder((uint) error)));
+            return SendToRemote(BitConverter.GetBytes(ServiceMessage.HostToNetworkOrder((uint)error)));
         }
 
         public async Task SendToRemote(byte[] message)

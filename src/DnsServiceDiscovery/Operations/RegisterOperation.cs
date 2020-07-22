@@ -1,5 +1,4 @@
 ﻿using System;
-using Mittosoft.DnsServiceDiscovery.Messages;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Messages.Requests;
 
@@ -8,7 +7,7 @@ namespace Mittosoft.DnsServiceDiscovery.Operations
     internal class RegisterOperation : OperationBase
     {
         public event EventHandler<RegistrationEventArgs> RegistrationEvent;
-        
+
         public RegisterOperation(string instanceName, string serviceType, string domain, string host, ushort port, byte[] txtRecord = null, uint interfaceIndex = 0, object context = null) :
             base(new RegisterMessage(instanceName, serviceType, domain, host, port, txtRecord, ServiceFlags.None, interfaceIndex), context)
         {

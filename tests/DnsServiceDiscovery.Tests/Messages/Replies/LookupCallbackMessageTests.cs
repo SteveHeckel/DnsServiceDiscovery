@@ -14,7 +14,7 @@ namespace DnsServiceDiscovery.Tests.Messages.Replies
         [Fact]
         public void LookupCallbackMessageSerializationTest()
         {
-            const string  hostName = "RPI.local";
+            const string hostName = "RPI.local";
             const ResourceRecordType rrType = ResourceRecordType.A;
             const ushort rrClass = 1; // IN
             var rrData = IPAddress.Parse("127.0.0.1").GetAddressBytes();

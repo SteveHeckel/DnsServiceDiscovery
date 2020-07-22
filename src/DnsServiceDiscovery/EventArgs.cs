@@ -16,7 +16,7 @@ namespace Mittosoft.DnsServiceDiscovery
             MoreComing = moreComing;
         }
     }
-    
+
     public enum BrowseEventType
     {
         None,

@@ -1,5 +1,4 @@
 ﻿using System;
-using Mittosoft.DnsServiceDiscovery.Messages;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Messages.Requests;
 
@@ -8,7 +7,7 @@ namespace Mittosoft.DnsServiceDiscovery.Operations
     class BrowseOperation : OperationBase
     {
         public event EventHandler<BrowseEventArgs> BrowseEvent;
-        
+
         public BrowseOperation(string serviceType, string domain = null, uint interfaceIndex = 0, object context = null) :
             base(new BrowseMessage(serviceType, domain, interfaceIndex), context)
         {

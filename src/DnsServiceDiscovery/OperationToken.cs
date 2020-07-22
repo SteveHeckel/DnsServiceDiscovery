@@ -6,7 +6,7 @@ namespace Mittosoft.DnsServiceDiscovery
 {
     public interface IOperationToken
     {
-        OperationState State { get;}
+        OperationState State { get; }
         object Context { get; }
 
         event EventHandler<OperationState> StateChanged;
@@ -17,8 +17,8 @@ namespace Mittosoft.DnsServiceDiscovery
     internal class OperationToken : IOperationToken
     {
         private OperationState _state;
-        public OperationState State 
-        { 
+        public OperationState State
+        {
             get => _state;
             internal set
             {

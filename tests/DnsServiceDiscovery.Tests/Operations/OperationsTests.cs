@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Mittosoft.DnsServiceDiscovery;
-using Mittosoft.DnsServiceDiscovery.Messages;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Operations;
 using Xunit;
@@ -53,17 +51,17 @@ namespace DnsServiceDiscovery.Tests.Operations
                 new object[]
                 {
                     new ResolveOperation("Blah", "_cac._tcp", "MyDomain"),
-                    new ResolveCallbackMessage("FooHost", "_cac._tcp.local.", 6543), 
+                    new ResolveCallbackMessage("FooHost", "_cac._tcp.local.", 6543),
                 },
                 new object[] {
                     new LookupOperation("MyHostName", ProtocolFlags.IPv4v6, true),
-                    new LookupCallbackMessage(ServiceFlags.Add, "FooHost", ResourceRecordType.A, 1, 
+                    new LookupCallbackMessage(ServiceFlags.Add, "FooHost", ResourceRecordType.A, 1,
                         IPAddress.Parse("127.0.0.1").GetAddressBytes(), 42)
                 },
                 new object[]
                 {
                     new RegisterOperation("Blah", "_cac._tcp", null, null, 5678),
-                    new RegisterCallbackMessage(ServiceFlags.Add, "NewInstance", "_cac._tcp", "MyDomain"), 
+                    new RegisterCallbackMessage(ServiceFlags.Add, "NewInstance", "_cac._tcp", "MyDomain"),
                 },
                 new object[] { new ConnectionOperation(), }
             };

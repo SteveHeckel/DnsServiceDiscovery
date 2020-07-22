@@ -67,7 +67,7 @@ namespace Mittosoft.DnsServiceDiscovery.Records
 
             return index;
         }
-       
+
         // This method parses a bonjour dns-sd style TXT record command line string and creates a TxtRecord instance
         public static DnssdTxtRecord ParseString(string txtRecordString)
         {
@@ -120,7 +120,7 @@ namespace Mittosoft.DnsServiceDiscovery.Records
         {
             return (value >= 0x20 && value <= 0x7E);
         }
-        
+
         private static bool IsHexDigit(char c)
         {
             return ((c >= '0' && c <= '9') ||

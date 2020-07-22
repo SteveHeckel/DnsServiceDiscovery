@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Text;
-using Ardalis.GuardClauses;
 using Mittosoft.DnsServiceDiscovery.Helpers;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages
@@ -55,9 +53,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages
 
         public ServiceMessage(ServiceMessageHeader header, IServiceMessagePayload payload)
         {
-            Guard.Against.Null(header, nameof(header));
-
-            _header = header;
+            _header = header ?? throw new ArgumentNullException(nameof(header));
             Payload = payload;
             if (Payload != null)
                 Payload.IsSubordinateMessage = _header.SubordinateID != 0;
@@ -80,7 +76,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages
             var headerBytes = _header.GetBytes();
 
             messageBytes.AddRange(headerBytes);
-            
+
             if (payloadBytes != null)
                 messageBytes.AddRange(payloadBytes);
 
@@ -96,8 +92,15 @@ namespace Mittosoft.DnsServiceDiscovery.Messages
 
         public void Parse(byte[] bytes, ref int index)
         {
-            Guard.Against.Null(bytes, nameof(bytes));
-            Guard.Against.OutOfRange(index, nameof(index), 0, bytes.Length);
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            if (index < 0 || index > bytes.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes));
+            }
 
             ((IByteStreamSerializable)Header).Parse(bytes, ref index);
 

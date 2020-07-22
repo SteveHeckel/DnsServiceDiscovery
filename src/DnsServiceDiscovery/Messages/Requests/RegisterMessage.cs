@@ -1,8 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq.Expressions;
-using Ardalis.GuardClauses;
-using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 {
@@ -42,8 +39,11 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public RegisterMessagePayload(string instanceName, string serviceType, string domain, string hostName, ushort port, byte[] txtRecord, ServiceFlags flags, uint interfaceIndex)
         {
-            Guard.Against.NullOrEmpty(serviceType, nameof(serviceType));
-            
+            if (string.IsNullOrEmpty(serviceType))
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
+
             InstanceName = instanceName ?? string.Empty;
             ServiceType = serviceType;
             Domain = domain ?? string.Empty;
@@ -89,8 +89,15 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public override void Parse(byte[] bytes, ref int index)
         {
-            Guard.Against.Null(bytes, nameof(bytes));
-            Guard.Against.OutOfRange(index, nameof(index), 0, bytes.Length);
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            if (index < 0 || index > bytes.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes));
+            }
 
             base.Parse(bytes, ref index);
             Flags = (ServiceFlags)ServiceMessage.GetUInt32(bytes, ref index);

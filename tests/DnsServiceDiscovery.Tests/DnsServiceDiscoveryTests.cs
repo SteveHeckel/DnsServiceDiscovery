@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Ardalis.GuardClauses;
 using DnsServiceDiscovery.Tests.Communication;
 using FluentAssertions;
 using Mittosoft.DnsServiceDiscovery;
@@ -73,11 +72,14 @@ namespace DnsServiceDiscovery.Tests
 
         internal async Task<IOperationToken> PerformServiceTest(Func<IDnsServiceDiscovery, Task<IOperationToken>> testFunc)
         {
-            Guard.Against.Null(testFunc, nameof(testFunc));
+            if (testFunc == null)
+            {
+                throw new ArgumentNullException(nameof(testFunc));
+            }
 
             DnsServiceDiscovery.SetServiceTransportProvider(_provider);
             _provider.Connector.Start(ProcessRequestMessage, ServiceTransportConnectorClosed);
-            var service = new DnsServiceDiscovery();;
+            var service = new DnsServiceDiscovery(); ;
 
             var iot = await testFunc(service);
 

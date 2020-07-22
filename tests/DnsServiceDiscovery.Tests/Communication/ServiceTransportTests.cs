@@ -58,7 +58,7 @@ namespace DnsServiceDiscovery.Tests.Communication
 
             if (aConnectionClosed)
                 throw new Exception("A connection was closed unexpectedly");
-           
+
             cm.Should().BeEquivalentTo(rm);
         }
 
@@ -93,7 +93,7 @@ namespace DnsServiceDiscovery.Tests.Communication
 
             func.Should().Throw<DnsServiceException>();
         }
-    
+
         [Fact]
         public void ServiceTransportStartFailDueToErrorTest()
         {
@@ -151,7 +151,7 @@ namespace DnsServiceDiscovery.Tests.Communication
 
             if (throwIfConnectionClosed)
                 ThrowIfConnectionClosed();
-            
+
             assertAction();
 
             //cm.Should().BeEquivalentTo(rm);

@@ -38,7 +38,7 @@ namespace Mittosoft.DnsServiceDiscovery
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ServiceDescriptor) obj);
+            return Equals((ServiceDescriptor)obj);
         }
 
         public override int GetHashCode()
@@ -48,7 +48,7 @@ namespace Mittosoft.DnsServiceDiscovery
                 var hashCode = InstanceName != null ? InstanceName.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ (ServiceType != null ? ServiceType.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Domain != null ? Domain.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (int) InterfaceIndex;
+                hashCode = (hashCode * 397) ^ (int)InterfaceIndex;
                 return hashCode;
             }
         }

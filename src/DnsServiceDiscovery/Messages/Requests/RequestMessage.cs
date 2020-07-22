@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 {
@@ -23,8 +20,8 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
                     return BitConverter.GetBytes(ServiceMessage.HostToNetworkOrder(ErrorReturnPort.Value));
                 else
                     throw new InvalidOperationException("RequestMessage is subordinate message but ErrorReturnPort is not set");
-            }            
-            
+            }
+
             return new byte[0];
         }
 
@@ -41,7 +38,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public RequestMessage(OperationCode opCode) : this(new ServiceMessageHeader(opCode), null)
         {
-            
+
         }
 
         public RequestMessage(ServiceMessageHeader header, RequestMessagePayload payload) : base(header, payload)

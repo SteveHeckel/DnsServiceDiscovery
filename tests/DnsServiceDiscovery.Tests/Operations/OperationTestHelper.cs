@@ -3,13 +3,10 @@ using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Ardalis.GuardClauses;
 using DnsServiceDiscovery.Tests.Communication;
 using FluentAssertions;
-using Nito.AsyncEx;
 using Mittosoft.DnsServiceDiscovery;
 using Mittosoft.DnsServiceDiscovery.Communication;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
@@ -30,7 +27,10 @@ namespace DnsServiceDiscovery.Tests.Operations
         internal async Task<TOperation> PerformOperationExecuteTestAsPrimary<TOperation>(TOperation operation, bool cancelAndCheckStateOnExit = true)
             where TOperation : OperationBase
         {
-            Guard.Against.Null(operation, nameof(operation));
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
 
             OperationBase.TransportProvider = _provider;
 
@@ -92,12 +92,7 @@ namespace DnsServiceDiscovery.Tests.Operations
             var result = false;
             try
             {
-                var cts = new CancellationTokenSource();
-                var timerTask = Task.Delay(2000, cts.Token);
-                var mreTask = _manualResetEvent.WaitAsync(cts.Token);
-                var cTask = await Task.WhenAny(timerTask, mreTask);
-                result = cTask == mreTask;
-                cts.Cancel();
+                result = await _manualResetEvent.WaitAsync(2000);
             }
             catch (OperationCanceledException)
             {
@@ -164,7 +159,7 @@ namespace DnsServiceDiscovery.Tests.Operations
                         }
                     }
                     catch (Exception e)
-                    { 
+                    {
                         Console.WriteLine(e.Message);
                     }
                 }
@@ -189,32 +184,32 @@ namespace DnsServiceDiscovery.Tests.Operations
             switch (args)
             {
                 case BrowseEventArgs oeArgs:
-                {
-                    CallbackValues = (OperationCallbackType.Browse, oeArgs.EventType, oeArgs.Descriptor.InstanceName, oeArgs.Descriptor.ServiceType, oeArgs.Descriptor.Domain, oeArgs.Descriptor.InterfaceIndex);
-                    break;
-                }
-                case RegistrationEventArgs oeArgs:
-                {
-                    CallbackValues = (OperationCallbackType.Register, oeArgs.EventType, oeArgs.Descriptor.InstanceName, oeArgs.Descriptor.ServiceType, oeArgs.Descriptor.Domain, oeArgs.Descriptor.InterfaceIndex);
-                    break;
-                }
-                case ResolveEventArgs oeArgs:
-                {
-                    byte[] trBytes = null;
-                    if (oeArgs.TxtRecords != null)
                     {
-                        var trb = new TxtRecordBuilder(oeArgs.TxtRecords);
-                        trBytes = trb.GetBytes();
+                        CallbackValues = (OperationCallbackType.Browse, oeArgs.EventType, oeArgs.Descriptor.InstanceName, oeArgs.Descriptor.ServiceType, oeArgs.Descriptor.Domain, oeArgs.Descriptor.InterfaceIndex);
+                        break;
                     }
+                case RegistrationEventArgs oeArgs:
+                    {
+                        CallbackValues = (OperationCallbackType.Register, oeArgs.EventType, oeArgs.Descriptor.InstanceName, oeArgs.Descriptor.ServiceType, oeArgs.Descriptor.Domain, oeArgs.Descriptor.InterfaceIndex);
+                        break;
+                    }
+                case ResolveEventArgs oeArgs:
+                    {
+                        byte[] trBytes = null;
+                        if (oeArgs.TxtRecords != null)
+                        {
+                            var trb = new TxtRecordBuilder(oeArgs.TxtRecords);
+                            trBytes = trb.GetBytes();
+                        }
 
-                    CallbackValues = (OperationCallbackType.Resolve, oeArgs.FullName, oeArgs.HostName, oeArgs.Port, trBytes, oeArgs.InterfaceIndex);
-                    break;
-                }
+                        CallbackValues = (OperationCallbackType.Resolve, oeArgs.FullName, oeArgs.HostName, oeArgs.Port, trBytes, oeArgs.InterfaceIndex);
+                        break;
+                    }
                 case LookupEventArgs oeArgs:
-                {
-                    CallbackValues = (OperationCallbackType.Lookup, oeArgs.EventType, oeArgs.HostName, oeArgs.IPAddress, oeArgs.Ttl, oeArgs.InterfaceIndex);
-                    break;
-                }
+                    {
+                        CallbackValues = (OperationCallbackType.Lookup, oeArgs.EventType, oeArgs.HostName, oeArgs.IPAddress, oeArgs.Ttl, oeArgs.InterfaceIndex);
+                        break;
+                    }
             }
 
             _manualResetEvent.Set();

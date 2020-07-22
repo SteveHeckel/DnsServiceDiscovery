@@ -19,7 +19,7 @@ namespace Mittosoft.DnsServiceDiscovery
         Task<IOperationToken> ResolveAsync(ServiceDescriptor descriptor, object context = null);
         Task<IOperationToken> ResolveAsync(string instanceName, string serviceType, string domain, uint interfaceIndex = 0, object context = null);
         Task<IOperationToken> LookupAsync(string hostName, ProtocolFlags flags, bool withTimeout = false, uint interfaceIndex = 0, object context = null);
-        Task CancelAllOperationsAsync( );
+        Task CancelAllOperationsAsync();
     }
 
     public class DnsServiceDiscovery : IDnsServiceDiscovery
@@ -79,7 +79,7 @@ namespace Mittosoft.DnsServiceDiscovery
             op.BrowseEvent += (s, e) => BrowseEvent?.Invoke(s, e);
 
             await _connection.AddAndExecuteSubordinate(op);
-        
+
             return op.Token;
         }
 
@@ -117,7 +117,7 @@ namespace Mittosoft.DnsServiceDiscovery
             await CheckConnectionAsync();
 
             var op = new LookupOperation(hostName, flags, withTimeout, interfaceIndex, context);
-            
+
             op.LookupEvent += (s, e) => LookupEvent?.Invoke(s, e);
 
             await _connection.AddAndExecuteSubordinate(op);
@@ -125,7 +125,7 @@ namespace Mittosoft.DnsServiceDiscovery
             return op.Token;
         }
 
-        public async Task CancelAllOperationsAsync( )
+        public async Task CancelAllOperationsAsync()
         {
             if (_connection != null)
             {

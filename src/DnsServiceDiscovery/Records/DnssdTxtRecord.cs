@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ardalis.GuardClauses;
 using Mittosoft.DnsServiceDiscovery.Helpers;
 
 namespace Mittosoft.DnsServiceDiscovery.Records
@@ -14,14 +13,22 @@ namespace Mittosoft.DnsServiceDiscovery.Records
 
         public DnssdTxtRecord(byte[] recordBytes)
         {
-            Guard.Against.NullOrTooManyElements(recordBytes, nameof(recordBytes), MaxTxtRecordDataLength);
+            if (recordBytes == null)
+            {
+                throw new ArgumentNullException(nameof(recordBytes));
+            }
+
+            if (recordBytes.Length > MaxTxtRecordDataLength)
+            {
+                throw new ArgumentOutOfRangeException(nameof(recordBytes));
+            }
 
             RecordBytes = recordBytes;
         }
 
         public byte[] GetBytes()
         {
-            var bytes = new List<byte> {Convert.ToByte(RecordBytes.Length)};
+            var bytes = new List<byte> { Convert.ToByte(RecordBytes.Length) };
 
             bytes.AddRange(RecordBytes);
 
@@ -30,14 +37,21 @@ namespace Mittosoft.DnsServiceDiscovery.Records
 
         public static DnssdTxtRecord Parse(byte[] bytes, ref int index)
         {
-            Guard.Against.Null(bytes, nameof(bytes));
-            Guard.Against.OutOfRange(index, nameof(index), 0, bytes.Length);
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            if (index < 0 || index > bytes.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes));
+            }
 
             if (index == bytes.Length)
                 return null;
 
             var length = bytes[index++];
-            
+
             var txtRecord = new DnssdTxtRecord(bytes.SubArray(index, length));
             index += length;
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Ardalis.GuardClauses;
 using Mittosoft.DnsServiceDiscovery.Helpers;
 
 namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
@@ -12,7 +11,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
         }
 
         public LookupMessage(string hostName, ProtocolFlags protocolFlags, bool withTimeout, uint interfaceIndex = 0)
-            : this(new ServiceMessageHeader(OperationCode.AddressInfoRequest), 
+            : this(new ServiceMessageHeader(OperationCode.AddressInfoRequest),
                 new LookupMessagePayload(hostName, protocolFlags, ServiceFlags.ReturnIntermediates | (withTimeout ? ServiceFlags.Timeout : ServiceFlags.None),
                     interfaceIndex))
         {
@@ -38,9 +37,16 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public LookupMessagePayload(string hostName, ProtocolFlags protocolFlags, ServiceFlags flags, uint interfaceIndex)
         {
-            Guard.Against.NullOrEmpty(hostName, nameof(hostName));
-            Guard.Against.NotAnyFlag(protocolFlags, ProtocolFlags.IPv4v6, nameof(protocolFlags));
-            
+            if (string.IsNullOrEmpty(hostName))
+            {
+                throw new ArgumentNullException(nameof(hostName));
+            }
+
+            if (!protocolFlags.HasAnyFlag(ProtocolFlags.IPv4v6))
+            {
+                throw new ArgumentException(nameof(protocolFlags));
+            }
+
             HostName = hostName;
             ProtocolFlags = protocolFlags;
             Flags = flags;
@@ -63,8 +69,15 @@ namespace Mittosoft.DnsServiceDiscovery.Messages.Requests
 
         public override void Parse(byte[] bytes, ref int index)
         {
-            Guard.Against.Null(bytes, nameof(bytes));
-            Guard.Against.OutOfRange(index, nameof(index), 0, bytes.Length);
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            if (index < 0 || index > bytes.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes));
+            }
 
             base.Parse(bytes, ref index);
             Flags = (ServiceFlags)ServiceMessage.GetUInt32(bytes, ref index);

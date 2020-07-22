@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Text;
 using Mittosoft.DnsServiceDiscovery.Helpers;
 using Mittosoft.DnsServiceDiscovery.Messages.Replies;
 using Mittosoft.DnsServiceDiscovery.Messages.Requests;
@@ -17,7 +15,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages
                 {OperationCode.AddressInfoRequest, (h) => new LookupMessage(h) },
                 {OperationCode.RegisterServiceRequest, (h) => new RegisterMessage(h) },
                 {OperationCode.ResolveRequest, (h) => new ResolveMessage(h) },
-                {OperationCode.BrowseReply, (h) => new BrowseCallbackMessage(h) }, 
+                {OperationCode.BrowseReply, (h) => new BrowseCallbackMessage(h) },
                 {OperationCode.AddressInfoReply, (h) => new LookupCallbackMessage(h) },
                 {OperationCode.RegisterServiceReply, (h) => new RegisterCallbackMessage(h) },
                 {OperationCode.ResolveReply, (h) => new ResolveCallbackMessage(h) }
@@ -48,7 +46,7 @@ namespace Mittosoft.DnsServiceDiscovery.Messages
         public static ServiceMessage GetServiceMessage(byte[] bytes, int index)
         {
             var header = ServiceMessageHeader.Parse(bytes, ref index);
-            var sm = GetServiceMessage<ServiceMessage>(header, bytes, index) ?? 
+            var sm = GetServiceMessage<ServiceMessage>(header, bytes, index) ??
                     new ServiceMessage(header, new ServiceMessagePayload(bytes.SubArray(index, bytes.Length - index)));
 
             return sm;
