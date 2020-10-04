@@ -10,7 +10,7 @@
     <Product>DNS Service Discovery CLI</Product>
     <Description>Console application to exercise the DnsServiceDiscovery Library.</Description>
     <RootNamespace>Mittosoft.DnsServiceDiscovery.CLI</RootNamespace>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
