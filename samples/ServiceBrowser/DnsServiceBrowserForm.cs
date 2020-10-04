@@ -152,8 +152,19 @@ namespace Mittosoft.DnsServiceBrowser
             }
         }
 
+        public static string InterfaceLocalOnly = "Interface: LocalOnly";
+
         private void AddNetworkInterfaceNode(TreeNode node, uint interfaceIndex)
         {
+            if (interfaceIndex == InterfaceIndex.LocalOnly)
+            {
+                var key = InterfaceLocalOnly;
+                var newNode = new TreeNode(key) { Name = key, Tag = InterfaceLocalOnly };
+                node.Nodes.Add(newNode);
+
+                return;
+            }
+
             var ni = GetNetworkInterface(interfaceIndex);
             if (ni != null)
             {
@@ -328,10 +339,10 @@ namespace Mittosoft.DnsServiceBrowser
             if (x == null || y == null)
                 return 0;
 
-            if (x.Tag is NetworkInterface)
+            if (x.Tag is NetworkInterface || ReferenceEquals(x.Tag, DnsServiceBrowserForm.InterfaceLocalOnly))
                 return -1;
             
-            return y.Tag is NetworkInterface ? 1 : string.CompareOrdinal(x.Text, y.Text);
+            return (y.Tag is NetworkInterface || ReferenceEquals(x.Tag, DnsServiceBrowserForm.InterfaceLocalOnly)) ? 1 : string.CompareOrdinal(x.Text, y.Text);
         }
 
         public int Compare(object x, object y)

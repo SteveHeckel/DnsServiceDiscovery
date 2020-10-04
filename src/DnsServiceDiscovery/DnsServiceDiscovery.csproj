@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.0.0" />
     <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
     <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.0.0" />
   </ItemGroup>
