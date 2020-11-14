@@ -2,7 +2,7 @@
 
 namespace Mittosoft.DnsServiceDiscovery.Helpers
 {
-    public static class EnumExtensions
+    internal static class EnumExtensions
     {
         public static bool HasAnyFlag<TEnum>(this TEnum value, TEnum flags) where TEnum : struct, Enum, IConvertible
         {
